@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from a1 import ipc_explanations
-
 import joblib
+from a1.ipc_explanations import EXPLANATIONS
 def home(request):
     # Default view state
     context = {
@@ -9,7 +8,6 @@ def home(request):
     }
     pipeline = joblib.load(r'C:\legal_ai_project\ipc_model\models\ipc_pipeline.joblib')
     if request.method == 'POST':
-        # Check which button was clicked
         action = request.POST.get('action')
         
         if action == 'go_to_predictor':
@@ -17,15 +15,19 @@ def home(request):
             
         elif action == 'predict':
             facts = request.POST.get('case_facts', '')
-            # Logic: Here you would call your ML model. 
-            # For now, we simulate a result.
             context['view'] = 'result'
             context['facts'] = facts
-            prediction=pipeline.predict([facts])
-            context['prediction'] = prediction[0]
-            reason = ipc_explanations.EXPLANATIONS.get(prediction[0], "Prediction based on patterns learned from case data.")
-
-
+            
+            # This returns an array like: array(['IPC 302'], dtype=object)
+            prediction_array = pipeline.predict([facts])
+            
+            # FIX: Extract the first element from the array to get the string "IPC 302"
+            result_label = prediction_array[0] 
+            
+            context['prediction'] = result_label
+            
+            # Now result_label is a string, which is hashable!
+            reason = EXPLANATIONS.get(result_label, "Prediction based on patterns learned from case data.")
             context['reason'] = reason
 
     return render(request, 'a1/a1.html', context)

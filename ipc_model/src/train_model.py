@@ -30,7 +30,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 vectorizer = TfidfVectorizer(
     max_features=5000,
     stop_words='english',
-    ngram_range=(1,2)
+    ngram_range=(1,2),
+
 )
 
 X_train_tfidf = vectorizer.fit_transform(X_train)
@@ -40,6 +41,7 @@ model_svc = LinearSVC(
     random_state=42,
     max_iter=1000,
     class_weight='balanced',
+  
 )
 
 
