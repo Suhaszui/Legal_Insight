@@ -19,6 +19,6 @@ from django.urls import path,include
 from a1.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('a1/', home),
+    path('legal/', home),
     path('', include('a1.urls')),
 ]
