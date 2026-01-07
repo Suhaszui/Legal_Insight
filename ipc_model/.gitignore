@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Database
+db.sqlite3
+
+# Models (optional, if they are too big for git)
+*.joblib
