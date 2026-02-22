@@ -1,6 +1,6 @@
-
-from django.urls import path,include
+from django.urls import path
 from a1.views import home
+
 urlpatterns = [
-    path('a1/', home),
+    path('', home),   # 👈 CHANGE THIS
 ]
